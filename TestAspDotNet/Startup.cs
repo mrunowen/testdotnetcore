@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System;
+using Common;
 
 namespace TestAspDotNet
 {
@@ -20,6 +21,9 @@ namespace TestAspDotNet
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
+
+			//	这是一个公用的配置文件
+			Config.SetConfiguration(configuration);
 		}
 
 		public IConfiguration Configuration { get; }
@@ -27,25 +31,13 @@ namespace TestAspDotNet
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			//	使用 JWT 身份验证
 			services.AddAuthentication(options =>
 			{
 				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
 				options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 			})
-			.AddJwtBearer(jwt =>
-			{
-				jwt.TokenValidationParameters = new TokenValidationParameters
-				{
-					//ValidateLifetime = true,
-					RequireExpirationTime = true,
-					ValidIssuer = "http://localhost:5200",
-					ValidAudience = "api",
-					ValidateAudience = true,
-					ValidateIssuer = true,
-					//ValidateLifetime = true,
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("11231123123123123132"))
-				};
-			});
+			.AddJwtBearer(Authentication.JwtBearer.JwtBearerOption);
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 		}
