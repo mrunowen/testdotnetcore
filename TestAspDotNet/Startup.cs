@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System;
 using Common;
+using Microsoft.IdentityModel.Logging;
 
 namespace TestAspDotNet
 {
@@ -24,6 +25,7 @@ namespace TestAspDotNet
 
 			//	这是一个公用的配置文件
 			Config.SetConfiguration(configuration);
+			IdentityModelEventSource.ShowPII = true;
 		}
 
 		public IConfiguration Configuration { get; }

@@ -6,7 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Common;
-
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 
 namespace TestAspDotNet.Authentication
 {
@@ -30,9 +31,13 @@ namespace TestAspDotNet.Authentication
 
 		public static void JwtBearerOption(JwtBearerOptions options)
 		{
-			options.TokenValidationParameters = new TokenValidationParameters
+			options.TokenValidationParameters = GetTokenValidationParameters();
+		}
+
+		public static TokenValidationParameters GetTokenValidationParameters()
+		{
+			return new TokenValidationParameters
 			{
-				//ValidateLifetime = true,
 				RequireExpirationTime = true,
 				ValidIssuer = Iss,
 				ValidAudience = Aud,
@@ -42,5 +47,21 @@ namespace TestAspDotNet.Authentication
 				IssuerSigningKey = new SymmetricSecurityKey(SecretKey)
 			};
 		}
+
+		/// <summary>
+		/// 获取头部中的 JWT 参数
+		/// </summary>
+		/// <param name="header"></param>
+		/// <returns></returns>
+		public static string GetJwtInHeader(IHeaderDictionary header)
+		{
+			if (!header.TryGetValue("Authorization", out StringValues value))
+				return "";
+			string[] jwts = value.ToString().Split(' ');
+			if (jwts.Length != 2 || jwts[0] != "Bearer")
+				return "";
+			return jwts[1];
+		}
+
 	}
 }
