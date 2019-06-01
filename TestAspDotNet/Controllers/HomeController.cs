@@ -61,8 +61,8 @@ namespace TestAspDotNet.Controllers
 			var key = new SymmetricSecurityKey(JwtBearer.SecretKey);
 
 			var jwt = new JwtSecurityTokenHandler();
-			
-			var c = jwt.ValidateToken(j, JwtBearer.GetTokenValidationParameters(), out SecurityToken s);
+
+			ClaimsPrincipal c = jwt.ValidateToken(j, JwtBearer.GetTokenValidationParameters(), out SecurityToken s);
 
 		}
 	}
