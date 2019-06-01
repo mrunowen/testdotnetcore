@@ -8,11 +8,16 @@ using System.Threading.Tasks;
 using Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Principal;
 
 namespace TestAspDotNet.Authentication
 {
 	public class JwtBearer
 	{
+		private static readonly JwtSecurityTokenHandler jwt = new JwtSecurityTokenHandler();
+
 		/// <summary>
 		/// 密钥
 		/// 在配置文件中配置
@@ -63,5 +68,40 @@ namespace TestAspDotNet.Authentication
 			return jwts[1];
 		}
 
+		/// <summary>
+		/// 获取 JWT 中的声明
+		/// </summary>
+		/// <returns></returns>
+		public static IEnumerable<Claim> GetClaims(string token)
+		{
+			ClaimsPrincipal principal = GetClaimsPrincipal(token);
+			return principal.Claims;
+		}
+
+		public static ClaimsPrincipal GetClaimsPrincipal(string token) => jwt.ValidateToken(token, GetTokenValidationParameters(), out SecurityToken securityToken);
+
+		/// <summary>
+		/// 创建一个 JWT Token 字符串
+		/// </summary>
+		/// <returns></returns>
+		public static string CreateJwtToken(IEnumerable<Claim> claims)
+		{
+			var secretKey = new SymmetricSecurityKey(SecretKey);
+
+			DateTime authTime = DateTime.UtcNow;
+			DateTime expiresAt = authTime.AddDays(7);
+
+			JwtSecurityToken token = new JwtSecurityToken
+			(
+				issuer: Iss,
+				audience: Aud,
+				notBefore: authTime,
+				claims: claims,
+				expires: expiresAt,
+				signingCredentials: new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256Signature)
+			);
+			string tokenString = jwt.WriteToken(token);
+			return tokenString;
+		}
 	}
 }

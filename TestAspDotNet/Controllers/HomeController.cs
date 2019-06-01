@@ -1,15 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using System.IdentityModel.Tokens.Jwt;
-using System.IdentityModel.Tokens;
-using TestAspDotNet.Models;
-using System.Text;
-using System;
-using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
-using Microsoft.IdentityModel.Logging;
-using Common;
 using TestAspDotNet.Authentication;
 
 namespace TestAspDotNet.Controllers
@@ -22,27 +13,12 @@ namespace TestAspDotNet.Controllers
 		[AllowAnonymous]
 		public IActionResult Index()
 		{
-			JwtSecurityTokenHandler jwt = new JwtSecurityTokenHandler();
-
-			var secretKey = new SymmetricSecurityKey(JwtBearer.SecretKey);
 			Claim[] claims = new Claim[]{
 					new Claim(ClaimTypes.Name, "奥玛吧"),
 					new Claim(ClaimTypes.Email, "6766g@mail.com")
 			};
 
-			DateTime authTime = DateTime.UtcNow;
-			DateTime expiresAt = authTime.AddDays(7);
-
-			JwtSecurityToken token = new JwtSecurityToken
-			(
-				issuer: JwtBearer.Iss,
-				audience: JwtBearer.Aud,
-				notBefore: authTime,
-				claims: claims,
-				expires: expiresAt,
-				signingCredentials: new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256Signature)
-			);
-			string tokenString = jwt.WriteToken(token);
+			string tokenString = JwtBearer.CreateJwtToken(claims);
 
 			return Ok(new
 			{
@@ -55,15 +31,8 @@ namespace TestAspDotNet.Controllers
 		[HttpGet("log")]
 		public void Log()
 		{
-			string j;
-			j = JwtBearer.GetJwtInHeader(Request.Headers);
-
-			var key = new SymmetricSecurityKey(JwtBearer.SecretKey);
-
-			var jwt = new JwtSecurityTokenHandler();
-
-			ClaimsPrincipal c = jwt.ValidateToken(j, JwtBearer.GetTokenValidationParameters(), out SecurityToken s);
-
+			string token = JwtBearer.GetJwtInHeader(Request.Headers);
+			ClaimsPrincipal principal = JwtBearer.GetClaimsPrincipal(token);
 		}
 	}
 }
