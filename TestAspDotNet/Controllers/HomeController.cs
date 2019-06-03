@@ -22,6 +22,8 @@ namespace TestAspDotNet.Controllers
 			var c = new MemoryCacheOptions();
 			IMemoryCache memory = new MemoryCache(c);
 			
+			
+
 			//memory.GetOrCreate
 			string tokenString = JwtBearer.CreateJwtToken(claims);
 
