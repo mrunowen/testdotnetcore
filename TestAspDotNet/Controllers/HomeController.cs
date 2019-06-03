@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using System.Security.Claims;
 using TestAspDotNet.Authentication;
 
@@ -18,6 +19,10 @@ namespace TestAspDotNet.Controllers
 					new Claim(ClaimTypes.Email, "6766g@mail.com")
 			};
 
+			var c = new MemoryCacheOptions();
+			IMemoryCache memory = new MemoryCache(c);
+			
+			//memory.GetOrCreate
 			string tokenString = JwtBearer.CreateJwtToken(claims);
 
 			return Ok(new
