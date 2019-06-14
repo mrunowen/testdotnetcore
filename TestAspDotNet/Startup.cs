@@ -56,7 +56,10 @@ namespace TestAspDotNet
 
 			app.UseAuthentication();
 
-			app.UseMvc();
+			app.UseMvc(routes =>
+			{
+				routes.MapRoute("default", "api/login");
+			});
 		}
 	}
 }
