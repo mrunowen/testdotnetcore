@@ -26,7 +26,7 @@ namespace TestAspDotNet.Areas.Users.Controllers
 		[Authorize]
 		public string SingOut()
 		{
-			return "";
+			return "success";
 		}
     }
 }

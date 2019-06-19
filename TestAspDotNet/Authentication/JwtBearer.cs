@@ -14,7 +14,13 @@ using System.Security.Principal;
 
 namespace TestAspDotNet.Authentication
 {
-	public class JwtBearer
+	/// <summary>
+	/// JWT 类
+	/// 在 appsettings.json 中配置节点： JwtSettings
+	/// 节点下子节点配置 Iss、Aud 和 SecretKey（密钥）
+	/// 节点下子节点配置 Expires（过期时间间隔：天）
+	/// </summary>
+	public sealed class JwtBearer
 	{
 		private static readonly JwtSecurityTokenHandler jwt = new JwtSecurityTokenHandler();
 
@@ -33,6 +39,11 @@ namespace TestAspDotNet.Authentication
 		/// 在配置文件中配置
 		/// </summary>
 		public static string Aud => Config.GetJwtAud();
+		/// <summary>
+		/// expires
+		/// 在配置文件中配置
+		/// </summary>
+		public static int Expires => Config.GetJwtExpires();
 
 		public static void JwtBearerOption(JwtBearerOptions options)
 		{
@@ -89,7 +100,7 @@ namespace TestAspDotNet.Authentication
 			var secretKey = new SymmetricSecurityKey(SecretKey);
 
 			DateTime authTime = DateTime.UtcNow;
-			DateTime expiresAt = authTime.AddDays(7);
+			DateTime expiresAt = authTime.AddDays(Expires);
 
 			JwtSecurityToken token = new JwtSecurityToken
 			(

@@ -34,16 +34,29 @@ namespace Common
 		/// 获取 JWT 的密钥
 		/// </summary>
 		/// <returns></returns>
-		public static string GetJwtSecretKey() => GetJwtSettings()["SecretKey"];
+		public static string GetJwtSecretKey() => GetJwtSettings()["SecretKey"] ?? "";
 		/// <summary>
 		/// 获取 JWT 的 Iss
 		/// </summary>
 		/// <returns></returns>
-		public static string GetJwtIss() => GetJwtSettings()["Iss"];
+		public static string GetJwtIss() => GetJwtSettings()["Iss"] ?? "";
 		/// <summary>
 		/// 获取 JWT 的 Aud
 		/// </summary>
 		/// <returns></returns>
-		public static string GetJwtAud() => GetJwtSettings()["Aud"];
+		public static string GetJwtAud() => GetJwtSettings()["Aud"] ?? "";
+		/// <summary>
+		/// '获取JWT 的 Expires
+		/// </summary>
+		/// <returns></returns>
+		public static int GetJwtExpires()
+		{
+			//	默认过期时间
+			int defaultExpires = 1;
+			string expires = GetJwtSettings()["Expires"];
+			if (int.TryParse(expires, out int ex))
+				return ex;
+			return defaultExpires;
+		}
 	}
 }
