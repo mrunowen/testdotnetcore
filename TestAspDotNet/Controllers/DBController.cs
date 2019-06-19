@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace TestAspDotNet.Controllers
 {
 	[Route("api/[controller]")]
-	[Filter.JWTAuthtication]
 	public class DBController : Controller
 	{
 		public string Index()

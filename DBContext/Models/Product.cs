@@ -12,7 +12,7 @@
  ***********************************************/
 
 
-namespace DBContext.Models
+namespace DB.Models
 {
 	public class Product : Entity
 	{

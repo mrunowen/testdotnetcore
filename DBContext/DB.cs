@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 
-namespace DBContext
+namespace DB
 {
 	public class DB : DbContext
 	{

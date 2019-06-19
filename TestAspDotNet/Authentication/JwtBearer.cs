@@ -62,7 +62,7 @@ namespace TestAspDotNet.Authentication
 		{
 			if (!header.TryGetValue("Authorization", out StringValues value))
 				return "";
-			string[] jwts = value.ToString().Split(' ');
+			string[] jwts = value.ToString().Split(new char[] { ' ' });
 			if (jwts.Length != 2 || jwts[0] != "Bearer")
 				return "";
 			return jwts[1];

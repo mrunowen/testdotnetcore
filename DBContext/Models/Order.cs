@@ -13,7 +13,7 @@
 
 using System.Collections.Generic;
 
-namespace DBContext.Models
+namespace DB.Models
 {
 	public class Order : Entity
 	{
