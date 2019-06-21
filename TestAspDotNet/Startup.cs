@@ -34,8 +34,7 @@ namespace TestAspDotNet
 			{
 				options.UseSqlServer(Configuration.GetConnectionString("Products"));
 			});
-			services.AddDefaultIdentity<IdentityUser>()
-				.AddEntityFrameworkStores<DB.DB>();
+			
 
 			//	使用 JWT 身份验证
 			services.AddAuthentication(options =>
@@ -45,7 +44,10 @@ namespace TestAspDotNet
 			})
 			.AddJwtBearer(Authentication.JwtBearer.JwtBearerOption);
 
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+			services.AddMvc(options =>
+			{
+				options.Filters.Add(typeof(Base.MyExceptionFilterAttribute));
+			}).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

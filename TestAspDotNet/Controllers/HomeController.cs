@@ -8,7 +8,7 @@ namespace TestAspDotNet.Controllers
 {
 	//[Authorize]
 	[Route("api/Home")]
-	public class HomeController : Controller
+	public class HomeController : Base.MyController
 	{
 		[HttpGet("index")]
 		[AllowAnonymous]
@@ -36,6 +36,12 @@ namespace TestAspDotNet.Controllers
 		{
 			string token = JwtBearer.GetJwtInHeader(Request.Headers);
 			ClaimsPrincipal principal = JwtBearer.GetClaimsPrincipal(token);
+		}
+
+		public void ThrowError()
+
+		{
+			throw new System.Exception("eeeeexxxxxx");
 		}
 	}
 }
