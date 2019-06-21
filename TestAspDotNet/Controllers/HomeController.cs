@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using System.Security.Claims;
-using TestAspDotNet.Authentication;
+using Common.Authentication;
 
 namespace TestAspDotNet.Controllers
 {

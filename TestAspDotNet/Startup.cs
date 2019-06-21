@@ -42,7 +42,7 @@ namespace TestAspDotNet
 				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
 				options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 			})
-			.AddJwtBearer(Authentication.JwtBearer.JwtBearerOption);
+			.AddJwtBearer(Common.Authentication.JwtBearer.JwtBearerOption);
 
 			services.AddMvc(options =>
 			{

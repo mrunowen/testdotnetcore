@@ -62,6 +62,24 @@ namespace Common
 		public static T Set<T>(object key, T value, MemoryCacheEntryOptions options) => MemoryCache.Set(key, value, options);
 
 		/// <summary>
+		/// 存进缓存，指定过期时间
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="key"></param>
+		/// <param name="value"></param>
+		/// <param name="second">缓存时间</param>
+		/// <returns></returns>
+		public static T Set<T>(object key, T value, int second)
+		{
+			if (second < 0)
+				second = 0;
+
+			MemoryCacheEntryOptions option = new MemoryCacheEntryOptions()
+				.SetSlidingExpiration(TimeSpan.FromSeconds(second));
+			return Set(key, value, option);
+		}
+
+		/// <summary>
 		/// 根据 key 获取缓存内容
 		/// </summary>
 		/// <param name="key"></param>

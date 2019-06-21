@@ -2,11 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>陈柏楠</Authors>
+    <Company>Common</Company>
+    <Description>Common公用的类库，.net standard 版本。</Description>
+    <PackageReleaseNotes>Common公用的类库，.net standard 版本。</PackageReleaseNotes>
+    <ApplicationIcon>favicon-20190620094739837.ico</ApplicationIcon>
+    <Copyright />
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
   </ItemGroup>
 
 </Project>

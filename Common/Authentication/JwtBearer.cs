@@ -1,18 +1,27 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿/*  RELEASE NOTE
+ *  Copyright (C) 2018 BIRENCHENS
+ *  All right reserved
+ *
+ *  Filename:       JwtBearer.cs
+ *  Desctiption:    
+ *
+ *  CreateBy:       mrunowen
+ *  CreateDate:     2019-06-21 16:43:17
+ *
+ *  Version:        V1.0.0
+ ***********************************************/
+ 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
-using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Principal;
+using System.Security.Claims;
+using System.Text;
 
-namespace TestAspDotNet.Authentication
+namespace Common.Authentication
 {
 	/// <summary>
 	/// JWT 类
