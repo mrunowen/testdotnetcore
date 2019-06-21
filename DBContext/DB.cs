@@ -11,9 +11,6 @@
  *  Version:        V1.0.0
  ***********************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 
 namespace DB
@@ -22,9 +19,12 @@ namespace DB
 	{
 		public DB(DbContextOptions<DB> options) : base(options) { }
 
+		public DbSet<Models.Users> Users { get; set; }
+
 		public DbSet<Models.Order> Orders { get; set; }
 
 		public DbSet<Models.Product> Products { get; set; }
 
+		public DbSet<Models.Histories> Histories { get; set; }
 	}
 }

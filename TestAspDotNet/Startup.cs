@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -27,6 +29,13 @@ namespace TestAspDotNet
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddMemoryCache();
+
+			services.AddDbContext<DB.DB>(options =>
+			{
+				options.UseSqlServer(Configuration.GetConnectionString("Products"));
+			});
+			services.AddDefaultIdentity<IdentityUser>()
+				.AddEntityFrameworkStores<DB.DB>();
 
 			//	使用 JWT 身份验证
 			services.AddAuthentication(options =>
