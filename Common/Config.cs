@@ -17,12 +17,21 @@ namespace Common
 {
 	public static class Config
 	{
-		private static IConfiguration _config;
+		/// <summary>
+		/// 配置
+		/// </summary>
+		public static IConfiguration Configuration { get; private set; }
 
 		public static void SetConfiguration(IConfiguration config)
 		{
-			_config = config;
+			Configuration = config;
 		}
+		
+		/// <summary>
+		/// 获取数据库连接字符串
+		/// </summary>
+		/// <param name="name"></param>
+		public static void GetConnectionString(string name) => Configuration.GetConnectionString(name);
 
 		/// <summary>
 		/// 获取配置文件中的 JWT 配置
